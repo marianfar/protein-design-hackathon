@@ -1,0 +1,3 @@
+[submodule "external/DSM"]
+	path = external/DSM
+	url = https://github.com/Gleghorn-Lab/DSM.git
