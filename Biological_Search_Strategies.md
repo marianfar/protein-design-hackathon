@@ -19,3 +19,10 @@
 ### 3. CDR-Loop 
 * Location for Mutation: Heavy Chain Residues 52 -57
 * Original Amino Acids: YPTNGY
+
+### 4. Non-CDR potentials 
+Within 10 Angstrom 
+
+* LC: [2, 48, 49, 66, 67, 68, 69, 71]
+
+* HC: [47, 49, 70, 98]
