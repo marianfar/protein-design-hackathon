@@ -137,4 +137,99 @@ The three efforts explore different ways to reach the same goal:
 | Workflow | Main design idea | Main evaluation | Evidence/status |
 |---|---|---|---|
 | DSM | Mask selected CDRs or loops and generate sequence alternatives | Sequence-integrity checks completed; downstream structural evaluation is separate | Three candidates generated |
-| Celia | Evidence-guided seed sequences plus constrained
+| Celia | Evidence-guided seed sequences plus constrained AbLang2 framework substitutions | Boltz-2 and custom ipSAE screen | 30 candidates and WT scored |
+| FULL_PIPELINE | Structure-contextual ProteinMPNN proposals, AbLang2 filtering, Boltz-2 folding | Combined ipSAE and AbLang2 ranking | Integrated implementation; first-run checks documented as pending |
+
+These workflows should be compared as complementary strategies, not treated as interchangeable runs. In particular, the three DSM candidates are not automatically part of Celia's 30-candidate panel, and the integrated FULL_PIPELINE shortlist is not automatically the same as either set.
+
+---
+
+## 4. Reproducing the Workflows
+
+Each workflow has its own working directory and dependencies. Run commands from the directory containing that workflow's scripts.
+
+### 4.1 DSM
+
+From the repository root, with Modal installed and authenticated:
+
+```bash
+modal run modal_app.py
+```
+
+Generation settings, including the number of candidates, are configured in `src/config.py`.
+
+### 4.2 Celia: AbLang2 Design and Boltz-2 Evaluation
+
+Follow the instructions in the Celia workflow README. The documented process generates the AbLang2 shortlist locally and runs Boltz-2 on Modal. For the reported 30-candidate evaluation, the documented command is:
+
+```bash
+modal run modal_eval.py --limit 30
+```
+
+The required reference and shortlist CSV files must be present in the expected `ablang2_results/` directory. See that workflow's README for the full setup, scoring, and score-only retrieval commands.
+
+### 4.3 FULL_PIPELINE
+
+From the FULL_PIPELINE directory, after installing and authenticating the Modal CLI:
+
+```bash
+pip install -U modal
+modal setup
+modal run pipeline.py --stage check
+```
+
+The smoke test should be run before launching the full workflow. If it passes, the documented full run is:
+
+```bash
+modal run pipeline.py
+```
+
+Settings can be changed in the `CONFIG` block or overridden for a single run:
+
+```bash
+modal run pipeline.py --overrides "n_samples=20;n_fold=6;chunk=3"
+```
+
+Check Modal spending controls before launching GPU jobs. GPU timeouts and sample counts can affect total costs.
+
+---
+
+## 5. Interpretation and Limitations
+
+- **Predicted scores are not experimental binding affinity.** AbLang2 likelihood/PLL, Boltz-2 ipTM, and ipSAE are model-based sequence or structural confidence measures. They do not directly measure K_D, kinetics, or therapeutic efficacy.
+- **The workflows use different design assumptions.** DSM generation, evidence-guided AbLang2 design, and ProteinMPNN structure-contextual redesign do not produce directly comparable candidate populations.
+- **Experimental evidence has context.** Measured multi-mutant sequences and literature-reported mutation effects are assay- and construct-specific. Effects should not be assumed additive or directly comparable to the organizer's WT measurement.
+- **Predicted interfaces need inspection.** A high interface-confidence score does not by itself establish the correct binding pose or specificity.
+- **Developability remains to be established.** Expression, stability, solubility, aggregation, specificity, and other properties require further evaluation.
+- **No new variant is experimentally validated in this project based on the documented computational results.** Laboratory testing is required to determine whether any candidate improves HER2 binding.
+
+---
+
+## 6. Overall Project Status
+
+| Work item | Status |
+|---|---|
+| HER2 target and parent scFv preparation | Completed |
+| DSM generation strategies and three candidate sequences | Completed |
+| DSM candidate sequence-integrity checks | Passed |
+| Evidence-guided AbLang2 design and 30-sequence shortlist | Completed |
+| Boltz-2/ipSAE evaluation of Celia's 30 candidates and WT | Reported complete |
+| Final selection of 15 unique candidates | Pending |
+| FULL_PIPELINE implementation | Documented; first-run verification required |
+| Experimental validation of new variants | Not yet completed |
+
+---
+
+## 7. Key References and Tools
+
+- [DSM implementation — Gleghorn Lab](https://github.com/Gleghorn-Lab/DSM)
+- [AbLang2 implementation](https://github.com/oxpig/AbLang2)
+- [Boltz implementation](https://github.com/jwohlwend/boltz)
+- [Dunbrack Lab ipSAE](https://github.com/DunbrackLab/IPSAE)
+- [HER2–trastuzumab Fab structure, PDB 1N8Z](https://www.rcsb.org/structure/1N8Z)
+- [Human HER2/ERBB2, UniProt P04626](https://www.uniprot.org/uniprotkb/P04626)
+- [A-Alpha Bio open AlphaSeq dataset](https://huggingface.co/datasets/aalphabio/open-alphaseq)
+
+---
+
+*This repository documents computational design and prioritization work for a hackathon. It does not establish that any newly generated antibody variant has improved experimental HER2 affinity or therapeutic performance.*
