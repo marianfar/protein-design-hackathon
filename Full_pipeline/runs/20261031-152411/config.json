@@ -1,0 +1,33 @@
+{
+  "parent_file": "parent_scfv.txt",
+  "antigen_chain": "C",
+  "auto_design": true,
+  "contact_cutoff": 8.0,
+  "design_vh": "47, 49, 52-57, 70, 98",
+  "design_vl": "2, 48, 49, 66-71",
+  "fixed_vh": "26-35, 50-51, 58-66, 99-109",
+  "fixed_vl": "24-34, 50-56, 89-97",
+  "protect_cysteines": true,
+  "omit_aas": "CX",
+  "n_samples": 100,
+  "temps": "0.1 0.2 0.3",
+  "seed_design": 37,
+  "min_mutations": 5,
+  "max_mutations": 14,
+  "min_ablang_mean": -1,
+  "min_ablang_min": -3,
+  "n_fold": 48,
+  "chunk": 6,
+  "seed_fold": 1,
+  "diffusion_samples": 1,
+  "recycling_steps": 3,
+  "sampling_steps": null,
+  "ipsae_pae_cutoff": 10,
+  "ipsae_dist_cutoff": 10,
+  "min_ipsae": null,
+  "final_n": 15,
+  "shortlist_weights": {
+    "ipsae": 1.0,
+    "ablang_delta_mean": 1.0
+  }
+}

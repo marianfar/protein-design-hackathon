@@ -1,0 +1,6 @@
+
+Chn1 Chn2  PAE Dist  Type   ipSAE    ipSAE_d0chn ipSAE_d0dom  ipTM_af  ipTM_d0chn     pDockQ     pDockQ2    LIS       n0res  n0chn  n0dom   d0res   d0chn   d0dom  nres1   nres2   dist1   dist2  Model
+A    B     10   10   asym  0.000000    0.000000    0.000000    0.213    0.116967      0.2047     0.0098     0.0000       0    872      0    1.00    9.98    1.00      0       0       0       0   /tmp/boltz_ac57e0a2/out/boltz_results_in/predictions/parent/parent_model_0
+B    A     10   10   asym  0.000000    0.000000    0.000000    0.169    0.131000      0.2047     0.0097     0.0000       0    872      0    1.00    9.98    1.00      0       0       0       0   /tmp/boltz_ac57e0a2/out/boltz_results_in/predictions/parent/parent_model_0
+A    B     10   10   max   0.000000    0.000000    0.000000    0.213    0.131000      0.2047     0.0098     0.0000       0    872      0    1.00    9.98    1.00      0       0       0       0   /tmp/boltz_ac57e0a2/out/boltz_results_in/predictions/parent/parent_model_0
+
